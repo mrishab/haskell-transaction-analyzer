@@ -3,23 +3,26 @@ module Format (formatTransactions) where
 import Transaction
 
 createDivider :: String -> String
-createDivider s = do 
-    let s_len = length s
-    replicate s_len '-'
+createDivider s = replicate (length s) '-'
 
-
-
+padValue :: Int -> String -> String
+padValue size val =
+  let valLen = length val
+      paddingReq = max 0 (size - valLen)
+      paddingStr = replicate paddingReq ' '
+   in val ++ paddingStr
 
 formatTransactions :: [Transaction] -> String
 formatTransactions txs =
-    unlines (header : createDivider header : map formatRow txs)
-    where
-    header = "Date       | Category     | Amount     | Note"
+  unlines (header : createDivider header : map formatRow txs)
+  where
+    header = "Date         | Category     | Amount       | Note"
+    paddingSize = 12
     formatRow t =
-        tDate t
+      padValue paddingSize (tDate t)
         ++ " | "
-        ++ tCategory t
+        ++ padValue paddingSize (tCategory t)
         ++ " | "
-        ++ show (tAmount t)
+        ++ padValue paddingSize (show (tAmount t))
         ++ " | "
         ++ tNote t
