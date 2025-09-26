@@ -1,7 +1,8 @@
+module Summarizer where
+
 import Data.List (groupBy, sortOn)
 import Transaction
 
-module Summarizer where
     ---CatogortiesTotal :: 
     ---groupByCategory ::
     ---sumCategory ::
