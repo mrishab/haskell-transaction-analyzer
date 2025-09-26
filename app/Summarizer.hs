@@ -12,6 +12,7 @@ data Summary = Summary
   { category :: String,
     totals :: Double
   }
+  deriving (Show, Eq)
 
 sortCategories :: [Transaction] -> [[Transaction]]
 sortCategories xs = undefined

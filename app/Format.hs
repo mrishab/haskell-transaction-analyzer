@@ -1,6 +1,7 @@
 module Format (formatTransactions) where
 
-import Summarizer (Summary)
+import Summarizer
+import Text.Printf (IsChar (toChar))
 import Transaction
 
 createDivider :: String -> String
@@ -28,5 +29,13 @@ formatTransactions txs =
         ++ " | "
         ++ tNote t
 
-formatSummary :: [[Summary]] -> String
-formatSummary s = undefined
+formatSummary :: [Summary] -> String
+formatSummary su =
+  unlines (header : createDivider header : map formatRow su)
+  where
+    header = "Category     | Totals"
+    paddingSize = 12
+    formatRow s =
+      padValue paddingSize (category s)
+        ++ " | "
+        ++ padValue paddingSize (show (totals s))
