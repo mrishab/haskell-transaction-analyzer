@@ -10,9 +10,9 @@ data Transaction = Transaction
 
 sampleTransactions :: [Transaction]
 sampleTransactions =
-  [ Transaction " 2024 -03 -01 " " Food " 12.50 " Lunch ␣ at ␣ cafe ",
-    Transaction " 2024 -03 -02 " " Travel " 120.00 " Taxi ␣ and ␣ train ",
-    Transaction " 2024 -03 -04 " " Food " 7.80 " Coffee "
+  [ Transaction " 2024-03-01 " "Food" 12.50 "Lunch ␣ at ␣ cafe",
+    Transaction " 2024-03-02 " "Travel" 120.00 "Taxi ␣ and ␣ train",
+    Transaction " 2024-03-04 " "Food" 7.80 "Coffee"
   ]
 
 formatTransactions :: [Transaction] -> String
@@ -29,18 +29,18 @@ formatTransactions txs =
         ++ " ␣ | ␣ "
         ++ tNote t
 
-
--- filterByCategory :: 
+-- filterByCategory ::
 -- filterByMinAmount ::
 -- totalByCategory ::
 
 main :: IO ()
 main = do
-    putStrLn "yes"
-    -- let bigFood = filterByMinAmount 10 ( filterByCategory " Food " sampleTransactions )
-    -- putStrLn " Food ␣ transactions ␣ over ␣ 10: "
-    -- putStrLn ( formatTransactions bigFood )
+  putStrLn "yes"
+  print sampleTransactions
 
-    -- putStrLn " Totals ␣ by ␣ category : "
-    -- print ( totalByCategory sampleTransactions )
+-- let bigFood = filterByMinAmount 10 ( filterByCategory " Food " sampleTransactions )
+-- putStrLn " Food ␣ transactions ␣ over ␣ 10: "
+-- putStrLn ( formatTransactions bigFood )
 
+-- putStrLn " Totals ␣ by ␣ category : "
+-- print ( totalByCategory sampleTransactions )
