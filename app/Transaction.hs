@@ -1,4 +1,4 @@
-module Transaction where 
+module Transaction where
 
 data Transaction = Transaction
   { tDate :: String,
@@ -7,4 +7,3 @@ data Transaction = Transaction
     tNote :: String
   }
   deriving (Show, Eq)
-

@@ -1,9 +1,9 @@
 module Main where
 
-import Format (formatTransactions)
-import Filters
-import Transaction
 import Data
+import Filters
+import Format (formatTransactions)
+import Transaction
 
 main :: IO ()
 main = do
