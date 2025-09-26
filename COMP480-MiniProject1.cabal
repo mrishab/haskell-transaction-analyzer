@@ -74,3 +74,14 @@ executable COMP480-MiniProject1
 
     -- Base language which the package is written in.
     default-language: Haskell2010
+
+test-suite mini-project-tests
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test, app
+    main-is:          Spec.hs
+    other-modules:    Filters, TestData, Transaction
+    build-depends:    
+        base ^>=4.18.3.0,
+        tasty,
+        tasty-hunit,
+        tasty-quickcheck
