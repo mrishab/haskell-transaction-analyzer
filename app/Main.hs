@@ -11,8 +11,8 @@ main = do
   putStrLn (formatTransactions transactions)
 
 -- let bigFood = filterByMinAmount 10 ( filterByCategory " Food " sampleTransactions )
--- putStrLn " Food ␣ transactions ␣ over ␣ 10: "
+-- putStrLn " Food transactions over 10: "
 -- putStrLn ( formatTransactions bigFood )
 
--- putStrLn " Totals ␣ by ␣ category : "
+-- putStrLn " Totals by category : "
 -- print ( totalByCategory sampleTransactions )
