@@ -8,7 +8,7 @@ import Transaction
 main :: IO ()
 main = do
   putStrLn "yes"
-  print transactions
+  putStrLn ( formatTransactions transactions )
 
 -- let bigFood = filterByMinAmount 10 ( filterByCategory " Food " sampleTransactions )
 -- putStrLn " Food ␣ transactions ␣ over ␣ 10: "
