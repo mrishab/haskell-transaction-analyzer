@@ -4,11 +4,16 @@ import Data
 import Filters
 import Format (formatTransactions)
 import Transaction
+import Summarizer (totalByCategory)
 
 main :: IO ()
 main = do
   putStrLn "yes"
   putStrLn (formatTransactions transactions)
+
+  putStrLn "----------------\n"
+
+  putStrLn (totalByCategory transactions)
 
 -- let bigFood = filterByMinAmount 10 ( filterByCategory " Food " sampleTransactions )
 -- putStrLn " Food transactions over 10: "

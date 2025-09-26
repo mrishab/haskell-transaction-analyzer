@@ -1,24 +1,20 @@
 module Summarizer where
 
-import Data.List (groupBy, sortOn)
+import Data.List (groupBy)
+import Format (formatSummary)
 import Transaction
 
----CatogortiesTotal ::
----groupByCategory ::
----sumCategory ::
----sortCategories ::
-
-data Summary = Summary
-  { category :: String,
-    totals :: Double
-  }
-  deriving (Show, Eq)
-
-sortCategories :: [Transaction] -> [[Transaction]]
-sortCategories xs = undefined
-
 groupByCategory :: [Transaction] -> [[Transaction]]
-groupByCategory xs = undefined
+groupByCategory = groupBy (\a b -> tCategory a == tCategory b)
 
-sumCategory :: [Transaction] -> (String, Double)
-sumCategory xs = undefined
+sumCategory :: [[Transaction]] -> [Summary]
+sumCategory =
+  map
+    ( \s ->
+        let total = sum (map tAmount s)
+            categoryName = tCategory (head s)
+         in Summary {category = categoryName, totals = total}
+    )
+
+totalByCategory :: [Transaction] -> String
+totalByCategory ts = formatSummary (sumCategory (groupByCategory ts))

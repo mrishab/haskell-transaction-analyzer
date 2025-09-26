@@ -1,7 +1,5 @@
-module Format (formatTransactions) where
+module Format where
 
-import Summarizer
-import Text.Printf (IsChar (toChar))
 import Transaction
 
 createDivider :: String -> String
