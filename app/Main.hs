@@ -1,12 +1,6 @@
 module Main where
 
-data Transaction = Transaction
-  { tDate :: String,
-    tCategory :: String,
-    tAmount :: Double,
-    tNote :: String
-  }
-  deriving (Show, Eq)
+import Transaction
 
 sampleTransactions :: [Transaction]
 sampleTransactions =
