@@ -1,1 +1,4 @@
-module Filter where
+module Filters where
+    -- filterByCategory ::
+    -- filterByMinAmount ::
+    -- totalByCategory ::
