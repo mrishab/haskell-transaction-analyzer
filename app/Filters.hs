@@ -8,6 +8,6 @@ filterByCategory category transactions = filter (\t -> category == getCategory t
     getCategory (Transaction _ c _ _) = c
 
 filterByMinAmount :: Double -> [Transaction] -> [Transaction]
-filterByMinAmount minAmount transactions = filter (\t -> minAmount < getAmount t) transactions
+filterByMinAmount minAmount transactions = filter (\t -> getAmount t >= minAmount) transactions
   where
     getAmount (Transaction _ _ a _) = a
