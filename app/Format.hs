@@ -1,5 +1,6 @@
 module Format (formatTransactions) where
 
+import Summarizer (Summary)
 import Transaction
 
 createDivider :: String -> String
@@ -26,3 +27,6 @@ formatTransactions txs =
         ++ padValue paddingSize (show (tAmount t))
         ++ " | "
         ++ tNote t
+
+formatSummary :: [[Summary]] -> String
+formatSummary s = undefined

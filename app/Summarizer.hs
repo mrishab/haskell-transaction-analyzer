@@ -8,6 +8,11 @@ import Transaction
 ---sumCategory ::
 ---sortCategories ::
 
+data Summary = Summary
+  { category :: String,
+    totals :: Double
+  }
+
 sortCategories :: [Transaction] -> [[Transaction]]
 sortCategories xs = undefined
 
