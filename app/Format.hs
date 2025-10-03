@@ -16,8 +16,8 @@ formatTransactions :: [Transaction] -> String
 formatTransactions txs =
   unlines (header : createDivider header : map formatRow txs)
   where
-    header = "Date         | Category     | Amount       | Note"
-    paddingSize = 12
+    header = "Date            | Category        | Amount          | Note"
+    paddingSize = 15
     formatRow t =
       padValue paddingSize (tDate t)
         ++ " | "
@@ -31,8 +31,8 @@ formatSummary :: [Summary] -> String
 formatSummary su =
   unlines (header : createDivider header : map formatRow su)
   where
-    header = "Category     | Totals"
-    paddingSize = 12
+    header = "Category        | Totals"
+    paddingSize = 15
     formatRow s =
       padValue paddingSize (sCategory s)
         ++ " | "

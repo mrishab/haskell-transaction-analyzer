@@ -1,9 +1,9 @@
 module Main where
 
 import Data
-import Filters
+-- import Filters
 import Format (formatTransactions)
-import Transaction
+-- import Transaction
 import Summarizer (totalByCategory)
 
 main :: IO ()
