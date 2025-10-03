@@ -3,11 +3,11 @@ module Filters (filterByCategory, filterByMinAmount) where
 import Transaction
 
 filterByCategory :: String -> [Transaction] -> [Transaction]
-filterByCategory category transactions = filter (\t -> category == getCategory t) transactions
+filterByCategory category = filter (\t -> category == getCategory t)
   where
     getCategory (Transaction _ c _ _) = c
 
 filterByMinAmount :: Double -> [Transaction] -> [Transaction]
-filterByMinAmount minAmount transactions = filter (\t -> getAmount t >= minAmount) transactions
+filterByMinAmount minAmount = filter (\t -> getAmount t >= minAmount)
   where
     getAmount (Transaction _ _ a _) = a
