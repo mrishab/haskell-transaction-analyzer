@@ -34,6 +34,6 @@ formatSummary su =
     header = "Category     | Totals"
     paddingSize = 12
     formatRow s =
-      padValue paddingSize (category s)
+      padValue paddingSize (sCategory s)
         ++ " | "
-        ++ padValue paddingSize (show (totals s))
+        ++ padValue paddingSize (show (sTotals s))

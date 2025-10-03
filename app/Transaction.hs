@@ -9,8 +9,8 @@ data Transaction = Transaction
   deriving (Show, Eq)
 
 data Summary = Summary
-  { category :: String,
-    totals :: Double
+  { sCategory :: String,
+    sTotals :: Double
   }
   deriving (Show, Eq)
 

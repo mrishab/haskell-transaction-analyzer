@@ -13,7 +13,7 @@ sumCategory =
     ( \s ->
         let total = sum (map tAmount s)
             categoryName = tCategory (head s)
-         in Summary {category = categoryName, totals = total}
+         in Summary {sCategory = categoryName, sTotals = total}
     )
 
 totalByCategory :: [Transaction] -> String
