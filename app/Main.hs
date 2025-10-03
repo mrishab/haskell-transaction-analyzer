@@ -1,23 +1,25 @@
 module Main where
 
 import Data
--- import Filters
+import Filters
 import Format (formatTransactions)
--- import Transaction
 import Summarizer (totalByCategory)
 
 main :: IO ()
 main = do
-  putStrLn "yes"
+  putStrLn "\nAll transctions \n"
   putStrLn (formatTransactions transactions)
 
   putStrLn "----------------\n"
 
+
+  let bigFood = filterByMinAmount 10 ( filterByCategory "Food" transactions )
+  putStrLn "Food transactions over 10: \n"
+  putStrLn ( formatTransactions bigFood )
+
+  let after10thTrans = filterAfterDate "2024-03-10" transactions
+  putStrLn  "Transactions occuring after 10th March 2024: \n"
+  putStrLn ( formatTransactions after10thTrans )
+
+  putStrLn "Totals by category : "
   putStrLn (totalByCategory transactions)
-
--- let bigFood = filterByMinAmount 10 ( filterByCategory " Food " sampleTransactions )
--- putStrLn " Food transactions over 10: "
--- putStrLn ( formatTransactions bigFood )
-
--- putStrLn " Totals by category : "
--- print ( totalByCategory sampleTransactions )
