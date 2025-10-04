@@ -1,4 +1,4 @@
-# Project Report: COMP480 MiniProject 1
+# Project Report: COMP481 MiniProject 1
 
 ## Overview and Objectives
 The goal of this mini-project is to build a small, idiomatic Haskell application that models personal finance transactions and supports:
