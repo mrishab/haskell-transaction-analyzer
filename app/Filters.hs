@@ -1,6 +1,6 @@
-module Filters where
+module Filters(filterByCategory, filterByMinAmount, filterBeforeDate, filterAfterDate) where
 
-import Transaction
+import Transaction(Transaction(..))
 
 filterByCategory :: String -> [Transaction] -> [Transaction]
 filterByCategory category = filter (\t -> category == getCategory t)

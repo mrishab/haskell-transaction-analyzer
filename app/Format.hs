@@ -1,6 +1,6 @@
-module Format where
+module Format(formatSummary, formatTransactions) where
 
-import Transaction
+import Transaction(Transaction(..), Summary(..))
 
 createDivider :: String -> String
 createDivider s = replicate (length s) '-'

@@ -1,9 +1,9 @@
-module Summarizer where
+module Summarizer(totalByCategory) where
 
 import Data.List (groupBy, sortBy)
 import Data.Ord (comparing)
 import Format (formatSummary)
-import Transaction
+import Transaction(Transaction(..), Summary(..))
 
 groupByCategory :: [Transaction] -> [[Transaction]]
 groupByCategory = groupBy (\a b -> tCategory a == tCategory b) . sortBy (comparing tCategory)

@@ -1,4 +1,4 @@
-module Transaction where
+module Transaction(Transaction(..), Summary(..)) where
 
 data Transaction = Transaction
   { tDate :: String,

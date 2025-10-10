@@ -1,13 +1,13 @@
-module Main where
+module Main(main) where
 
-import Data
-import Filters
+import Data(transactions)
+import Filters(filterByCategory, filterByMinAmount, filterAfterDate)
 import Format (formatTransactions)
 import Summarizer (totalByCategory)
 
 main :: IO ()
 main = do
-  putStrLn "\nAll transctions \n"
+  putStrLn "\nAll transactions \n"
   putStrLn (formatTransactions transactions)
 
   putStrLn "----------------\n"

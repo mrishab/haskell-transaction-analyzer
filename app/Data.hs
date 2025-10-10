@@ -1,6 +1,6 @@
 module Data (transactions) where
 
-import Transaction
+import Transaction(Transaction(..))
 
 transactions :: [Transaction]
 transactions =
