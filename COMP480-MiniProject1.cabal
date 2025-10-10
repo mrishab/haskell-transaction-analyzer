@@ -23,10 +23,11 @@ name:               COMP480-MiniProject1
 version:            0.1.0.0
 
 -- A short (one-line) description of the package.
--- synopsis:
+synopsis:           A Haskell application for transaction analysis and filtering
 
 -- A longer description of the package.
--- description:
+description:        This package provides functionality to analyze and filter financial transactions,
+                     including categorization, summarization, and querying capabilities.
 
 -- The license under which the package is released.
 license:            BSD-3-Clause
@@ -42,6 +43,10 @@ maintainer:         56480041+devnull03@users.noreply.github.com
 
 -- A copyright notice.
 -- copyright:
+
+-- Category of the package
+category:           Finance
+
 build-type:         Simple
 
 -- Extra doc files to be distributed with the package, such as a CHANGELOG or a README.
@@ -49,6 +54,10 @@ extra-doc-files:    CHANGELOG.md
 
 -- Extra source files to be distributed with the package, such as examples, or a tutorial module.
 -- extra-source-files:
+
+source-repository head
+    type:     git
+    location: https://github.com/mrishab/COMP480-MiniProject1.git
 
 common warnings
     ghc-options: -Wall
@@ -80,6 +89,7 @@ test-suite mini-project-tests
     hs-source-dirs:   test, app
     main-is:          Spec.hs
     other-modules:    Filters, TestData, Transaction
+    default-language: Haskell2010
     build-depends:    
         base ^>=4.18.3.0,
         tasty,
