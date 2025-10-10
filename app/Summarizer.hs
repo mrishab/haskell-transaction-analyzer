@@ -2,7 +2,6 @@ module Summarizer(totalByCategory) where
 
 import Data.List (groupBy, sortBy)
 import Data.Ord (comparing)
-import Format (formatSummary)
 import Transaction(Transaction(..), Summary(..))
 
 groupByCategory :: [Transaction] -> [[Transaction]]
@@ -17,5 +16,5 @@ sumCategory =
          in Summary {sCategory = categoryName, sTotals = total}
     )
 
-totalByCategory :: [Transaction] -> String
-totalByCategory ts = formatSummary (sumCategory (groupByCategory ts))
+totalByCategory :: [Transaction] -> [Summary]
+totalByCategory ts = sumCategory (groupByCategory ts)
