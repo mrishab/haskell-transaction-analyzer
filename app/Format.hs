@@ -14,7 +14,7 @@ padValue size val =
 
 formatTransactions :: [Transaction] -> String
 formatTransactions txs =
-  unlines (header : createDivider header : map formatRow txs)
+  unlines (createDivider header : header : createDivider header : map formatRow txs ++ [createDivider header])
   where
     header = "Date            | Category        | Amount          | Note                  "
     paddingSize = 15
@@ -29,7 +29,7 @@ formatTransactions txs =
 
 formatSummary :: [Summary] -> String
 formatSummary su =
-  unlines (header : createDivider header : map formatRow su)
+  unlines (createDivider header : header : createDivider header : map formatRow su ++ [createDivider header])
   where
     header = "Category        | Totals   "
     paddingSize = 15
