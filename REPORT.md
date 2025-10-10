@@ -1,126 +1,112 @@
 # Project Report: COMP481 MiniProject 1
 
-## Overview and Objectives
-The goal of this mini-project is to build a small, idiomatic Haskell application that models personal finance transactions and supports:
-- Filtering transactions by category, amount, and date
-- Summarizing totals by category
-- Presenting results in a simple tabular format
-- Verifying core behavior with unit tests
+## Team Information
+       Student Name | Email | Student ID
+- Arnav Mehta (Team Lead) | arnav.mehta@student.ufv.ca | 300196365
+- Tejas Pathange | tejas.pathange@student.ufv.ca | 300208898
+- Soum Majumdar | soum.majumdar@student.ufv.ca | 300206855
+- Rishab Manocha | rishab.manocha@student.ufv.ca | 300139589
 
-This project addresses these objectives by:
-- Defining clear data models (`Transaction`, `Summary`) in `Transaction.hs`
-- Implementing pure, composable filters in `Filters.hs`
-- Producing readable tables via `Format.hs`
-- Computing category totals in `Summarizer.hs`
-- Demonstrating the end-to-end flow in `Main.hs`
-- Capturing example data in `Data.hs` and validating logic via `test/Spec.hs`
+## Team member contributions
+- Arnav Mehta: Took the lead on coding and handled most of the core logic across all the main modules.
+- Tejas Pathange: Helped with testing and reviewing the code to make sure everything worked as expected.
+- Soum Majumdar: Wrote the project report and documentation, organized team meetings, and made sure all the project objectives were covered.
+- Rishab Manocha: Contributed to debugging and testing, and helped refine parts of the code during development.
 
-The code favors separation of concerns, referential transparency, and simple list processing patterns that are easy to reason about and test.
+## Overview
 
-## Architecture and Data Model
-- `Transaction.hs` defines:
-  - `Transaction { tDate :: String, tCategory :: String, tAmount :: Double, tNote :: String }`
-  - `Summary { sCategory :: String, sTotals :: Double }`
-- `Data.hs` provides a curated list of sample `transactions` for demonstration.
-- `Main.hs` wires the modules together to print:
-  1) All transactions, 2) Food transactions over 10, 3) Transactions after a date, and 4) Totals by category.
+### Objectives
+The goal of this mini-project is to build a small transaction analyzer program using Haskell that will process a set of transaction records and:
+- Filter them by category, amount, and date
+- Summarize the totals by category
+- Present the results in a simple tabular format
 
-Dates are represented as ISO strings (YYYY-MM-DD). This enables lexicographic comparison for simple before/after date filters without parsing, while keeping the implementation minimal.
+### How we achieve them
+- By clearly defining data models (`Transaction`, `Summary`) in `Transaction.hs`
+- By writing pure, composable filters in `Filters.hs`
+- By creating a readable output in a table format via `Format.hs`
+- By calculating the category totals in `Summarizer.hs`
+- By showing the end-to-end flow in `Main.hs`
+- By capturing example data in `Data.hs` and validating logic via `test/Spec.hs`
 
-## Key Functions and How They Work
+The entire codebase is written in a way to keep each part separate, use clear logic, and follow simple list patterns that are easy to understand and test.
 
-### Filters (`Filters.hs`)
-- `filterByCategory :: String -> [Transaction] -> [Transaction]`
-  - Uses `filter` and pattern matching to compare the `tCategory` field.
-- `filterByMinAmount :: Double -> [Transaction] -> [Transaction]`
-  - Keeps transactions whose `tAmount >= minAmount`.
-- `filterBeforeDate :: String -> [Transaction] -> [Transaction]`
-  - Retains items where `tDate < date`. Because dates are ISO-formatted strings, lexicographic ordering aligns with chronological ordering.
-- `filterAfterDate :: String -> [Transaction] -> [Transaction]`
-  - Symmetric to `filterBeforeDate` using `>`.
+## Project structure and data design
+Here’s what each file is responsible for:
+- `Transaction.hs`: defines our two types. A `Transaction` has a date, category, amount, and note. A `Summary` holds a category and its total.
+- `Data.hs`: just a small list of example transactions so we can run the app and tests.
+- `Filters.hs`: the filtering functions (by category, by minimum amount, and by date before/after).
+- `Summarizer.hs`: groups transactions by category and adds up amounts for each group.
+- `Format.hs`: builds simple text tables so the output is easy to read.
+- `Main.hs`: runs a short demo that prints all transactions, a filtered view, and totals by category.
 
-All four are pure list transformations with linear complexity O(n).
+We kept dates as strings in `YYYY-MM-DD` format. That way, normal string comparisons work for “before” and “after” without extra parsing, which is good enough for this project.
 
-### Formatting (`Format.hs`)
-- `createDivider :: String -> String`
-  - Produces a divider line of `-` matching the header length.
-- `padValue :: Int -> String -> String`
-  - Right-pads values with spaces to a fixed width; used for column alignment.
-- `formatTransactions :: [Transaction] -> String`
-  - Builds a table with header + divider + one row per transaction using `unlines`.
-- `formatSummary :: [Summary] -> String`
-  - Same pattern for category totals.
+## How the main functions work
 
-These functions are presentation-only and avoid side effects. They assume monospaced display for alignment.
+Filters (`Filters.hs`):
+- `filterByCategory category txs`: keeps only transactions in that category.
+- `filterByMinAmount min txs`: keeps transactions where the amount is at least `min`.
+- `filterBeforeDate date txs`: keeps transactions before `date`.
+- `filterAfterDate date txs`: keeps transactions after `date`.
 
-### Summarization (`Summarizer.hs`)
-- `groupByCategory :: [Transaction] -> [[Transaction]]`
-  - Sorts by `tCategory` (`sortBy (comparing tCategory)`) then groups adjacent equal categories (`groupBy`). Sorting first is essential because `groupBy` only combines adjacent elements.
-- `sumCategory :: [[Transaction]] -> [Summary]`
-  - Maps each group to a `Summary` by summing `tAmount` and using the common category name from `head`.
-- `totalByCategory :: [Transaction] -> String`
-  - Pipeline: `groupByCategory` -> `sumCategory` -> `formatSummary`. Overall complexity O(n log n) due to sorting.
+Formatting (`Format.hs`):
+- `formatTransactions`: prints a header, a divider, and one line per transaction with simple spacing so columns line up.
+- `formatSummary`: prints category totals with the same idea.
 
-### Program Entry (`Main.hs`)
-- Prints:
-  1) All transactions via `formatTransactions transactions`
-  2) Food transactions over 10 via `filterByCategory "Food"` + `filterByMinAmount 10`
-  3) Transactions after `"2024-03-10"` via `filterAfterDate`
-  4) Totals by category via `totalByCategory`
+Summarizing (`Summarizer.hs`):
+- We sort by category first so similar categories are next to each other, then group them.
+- For each group, we add up the amounts and make a `Summary`.
+- `totalByCategory` runs those steps and turns the result into a printable table.
 
-### Tests (`test/Spec.hs`, `test/TestData.hs`)
-- Uses `tasty` and `tasty-hunit` for unit tests around filters:
-  - `filterByCategory` returns expected Food transactions
-  - `filterByCategory` returns empty for a non-existent category
-  - `filterByMinAmount` thresholds behavior (> 10, and a high threshold)
-- `Test.Tasty.QuickCheck` is imported but not used yet; it can be leveraged for property tests later.
+Program entry (`Main.hs`):
+- Prints all transactions.
+- Prints “Food” transactions over 10.
+- Prints transactions after 2024‑03‑10.
+- Prints totals by category.
 
-## Challenges and How They Were Addressed
+Tests (`test/Spec.hs`, `test/TestData.hs`):
+- We check that filtering by category returns the expected items (and nothing for a category that doesn’t exist in the test data).
+- We check that filtering by minimum amount keeps only transactions over the threshold.
 
-1) Grouping by Category Correctly
-- Challenge: `groupBy` only groups adjacent equal elements; applying it directly on an unsorted list can produce multiple groups for the same category.
-- Resolution: Sort by `tCategory` before `groupBy` using `sortBy (comparing tCategory)`.
+## Challenges and what we did
+1) Grouping by category
+- Problem: `groupBy` only groups items that are next to each other.
+- Fix: Sorts by category first, then the group. That gives us one group per category.
 
-2) Date Comparisons Without a Date Library
-- Challenge: Implementing before/after date filters without pulling in `Data.Time` and parsers.
-- Resolution: Standardize date strings as ISO (YYYY-MM-DD) so lexicographic comparisons (`<`, `>`) match chronological order. This keeps the implementation minimal and sufficient for the dataset.
+2) Comparing dates
+- Problem: We didn’t want to pull in a date library for this small assignment.
+- Fix: Keeps dates as `YYYY-MM-DD` strings and compares them as strings. That works for before/after checks here.
 
-3) Column Alignment in Text Output
-- Challenge: Readable CLI tables require consistent widths.
-- Resolution: Implement `padValue` to right-pad strings and combine with a consistent header and a `createDivider` sized to the header. This yields simple, legible tables in monospaced fonts.
+3) Console output that’s readable
+- Problem: Raw prints are hard to scan.
+- Fix: Adds a header, a divider line, and pad fields so columns line up.
 
-4) Avoiding Over-Engineering in Summation
-- Challenge: Early approaches can use maps/dictionaries or custom folds; these add complexity and dependencies.
-- Resolution: Use sort + group + `sum` for clarity and correctness with standard library functions. This keeps the summarizer short and testable.
+4) Using simple types
+- Problem: `Double` isn’t perfect for money.
+- Trade‑off: It was good enough for our sample data. If we extended this, we would use a fixed‑point type.
 
-5) Testing Behavior Deterministically
-- Challenge: Making assertions on lists is order-sensitive.
-- Resolution: Filters preserve input order, and group/sum define a deterministic order (sorted by category). Unit tests target small hand-crafted datasets for clarity.
+5) Keeping tests small and clear
+- Approach: Use a tiny set of sample transactions and check a few common cases. It runs fast and is easy to understand.
 
-## Complexity and Performance
-- Filtering: O(n)
-- Summarization: O(n log n) due to sorting; summing is O(n)
-- Formatting: O(n) over number of rows
+## Complexity and performance
+- Filters go through the list once.
+- Totals by category do a sort first, then a single pass to add things up.
+- Formatting goes through the list one at a time to print it.
 
-For the data sizes typical of a mini-project or small personal dataset, this is more than sufficient.
+For small to medium lists, everything runs quickly.
 
-## Limitations and Possible Enhancements
-- Types
-  - `tDate :: String` is convenient but brittle if formats vary. Convert to `Day` from `Data.Time` for robust comparisons.
-  - `tAmount :: Double` is subject to floating-point rounding. Prefer `Data.Fixed` (`Centi`) or `Decimal`/`Rational` for currency.
-- Formatting
-  - Format amounts to two decimals (e.g., `printf "%.2f"`) and compute column widths from content for adaptive tables.
-- Summarization
-  - Provide an alternative implementation using `Map` for O(n log k) accumulation without sorting full lists.
-- CLI UX
-  - Add argument parsing (e.g., `optparse-applicative`) to filter by category/date/amount from the command line.
-- Testing
-  - Add QuickCheck properties (e.g., idempotence of `filterByMinAmount`, monotonicity properties, and that grouping preserves total amounts).
+## Limitations and what we’d add next
+- Dates: Switch to real date types (`Data.Time`) for full reliability.
+- Amounts: Use a fixed‑point number type and print to two decimals.
+- CLI: Add command‑line options so users can pass the category, date, and amount filters.
+- Summaries: Try a `Map`based approach for "totals" as another style.
+- Tests: Add QuickCheck properties (e.g., raising the min amount should never increase the number of results).
 
-## How the Objectives Were Met
-- Filtering by category, amount, date: Implemented in `Filters.hs` and demonstrated in `Main.hs`.
-- Summarization by category: Implemented in `Summarizer.hs` and printed by `Main.hs`.
-- Readable output: Implemented in `Format.hs` with headers and padding.
-- Testing core behavior: Implemented in `test/Spec.hs` using `tasty` and `tasty-hunit`.
+## Did we meet the objectives?
+- Yes: we can filter by category, amount, and date.
+- Yes: we can show totals per category.
+- Yes: the output is readable as a small table.
+- Yes: there are unit tests for the filter logic.
 
-In sum, the project delivers a clean, modular Haskell solution to explore transaction filtering and summarization, with simple, testable components and clear pathways for future enhancements.
+Overall, this is a small, modular Haskell program that does what we set out to do and leaves room for a few nice improvements.
