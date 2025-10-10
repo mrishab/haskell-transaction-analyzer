@@ -13,4 +13,3 @@ data Summary = Summary
     sTotals :: Double
   }
   deriving (Show, Eq)
-
