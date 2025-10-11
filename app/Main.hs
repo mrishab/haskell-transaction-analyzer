@@ -1,22 +1,27 @@
-module Main(main) where
+module Main (main) where
 
-import Data(transactions)
-import Filters(filterByCategory, filterByMinAmount, filterAfterDate)
-import Format (formatTransactions, formatSummary)
+import Data (transactions)
+import Filters (filterAfterDate, filterByCategory, filterByMinAmount)
+import Format (formatSummary, formatTransactions)
 import Summarizer (totalByCategory)
+
+p :: String -> IO ()
+p s = putStrLn (s ++ "\n")
 
 main :: IO ()
 main = do
-  putStrLn "\nAll transactions \n"
-  putStrLn (formatTransactions transactions)
+  p "\nAll transctions "
+  p (formatTransactions transactions)
+
+  p "----------------"
 
   let bigFood = filterByMinAmount 10 (filterByCategory "Food" transactions)
-  putStrLn "Food transactions over 10: \n"
-  putStrLn (formatTransactions bigFood)
+  p "Food transactions over 10: "
+  p (formatTransactions bigFood)
 
-  let after10th = filterAfterDate "2024-03-10" transactions
-  putStrLn "Transactions occurring after 10th March 2024: \n"
-  putStrLn (formatTransactions after10th)
+  let after10thTrans = filterAfterDate "2024-03-10" transactions
+  p "Transactions occuring after 10th March 2024: "
+  p (formatTransactions after10thTrans)
 
-  putStrLn "Totals by category: \n"
-  putStrLn (formatSummary (totalByCategory transactions))
+  p "Totals by category :"
+  p (formatSummary (totalByCategory transactions))
